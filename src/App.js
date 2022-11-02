@@ -3,6 +3,7 @@ import { checkLoginFunction } from "./common/checkLoginFunction";
 import Auth from "./components/Auth/Auth";
 import Layout from "./components/Layout/Layout";
 import "./App.scss";
+import ToDo from './components/ToDo/ToDo';
 
 function App() {
   //const isLogin = checkLoginFunction();
@@ -18,7 +19,7 @@ function App() {
       </Layout>
     );
   }
-  return <Layout toggleLogin={toggleLogin}>hhhhh</Layout>;
+  return <Layout toggleLogin={toggleLogin}><ToDo /></Layout>;
 }
 
 export default App;

@@ -1,0 +1,7 @@
+.todoWrap{
+  display: grid;
+  gap: 40px;
+  margin: 0 auto;
+  grid-template-rows: repeat(2, 1fr);
+
+}
