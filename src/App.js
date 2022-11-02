@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { checkLoginFunction } from "./common/checkLoginFunction";
+import Auth from "./components/Auth/Auth";
+import Layout from "./components/Layout/Layout";
+import "./App.scss";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  //const isLogin = checkLoginFunction();
+  const [isLogin, setIsLogin] = useState(checkLoginFunction())
+  const toggleLogin = (data) => {
+    setIsLogin(data)
+  }
+  console.log(isLogin)
+  if (!isLogin) {
+    return (
+      <Layout toggleLogin={toggleLogin}>
+        <Auth toggleLogin={toggleLogin} />
+      </Layout>
+    );
+  }
+  return <Layout toggleLogin={toggleLogin}>hhhhh</Layout>;
 }
 
 export default App;
