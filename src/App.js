@@ -7,7 +7,6 @@ import ToDo from './components/ToDo/ToDo';
 // import Andr from './components/Andr/Andr';
 
 function App() {
-  //const isLogin = checkLoginFunction();
   const [isLogin, setIsLogin] = useState(checkLoginFunction())
   const toggleLogin = (data) => {
     setIsLogin(data)

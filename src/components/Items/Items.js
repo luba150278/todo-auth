@@ -1,9 +1,7 @@
 import Item from "../Item/Item";
-import styles from './Items.module.scss';
+import styles from "./Items.module.scss";
 
-function Items({items, updateItems}) {
-
-
+function Items({ items, updateItems }) {
   return (
     <div>
       {items.length === 0 ? (
@@ -11,7 +9,11 @@ function Items({items, updateItems}) {
       ) : (
         <ul className={styles.items}>
           {items.map((item, i) => (
-            <Item key={`${item.text}-${i}`} item={item} updateItems={updateItems} />
+            <Item
+              key={`${item.text}-${i}`}
+              item={item}
+              updateItems={updateItems}
+            />
           ))}
         </ul>
       )}

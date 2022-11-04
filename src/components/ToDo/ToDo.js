@@ -10,20 +10,29 @@ function ToDo() {
 
   const updateItems = (isUpdate) => {
     if (isUpdate) {
-      setIsItemsUpdate(isItemsUpdate+1);
+      setIsItemsUpdate(isItemsUpdate + 1);
     }
-   
-  }
+  };
+
   async function getItems() {
-    const res = await instance.post("router?action=getItems", {
-      activeID: localStorage.getItem("activeID"),
-    });
-    setItems(res.data.items);
+    try {
+      const res = await instance.post("router?action=getItems", {
+        activeID: localStorage.getItem("activeID"),
+      });
+      if (res.data.items) {
+        setItems(res.data.items);
+        return;
+      }
+      console.log("No data");
+    } catch (err) {
+      console.log("Server error");
+    }
   }
 
   useEffect(() => {
     getItems();
   }, [isItemsUpdate]);
+
   return (
     <section>
       <div className="container">

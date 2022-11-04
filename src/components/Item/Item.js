@@ -9,6 +9,7 @@ function Item({ item, updateItems }) {
   const [isEdit, setIsEdit] = useState(false);
   const textField = useFormField(item.text);
   const activeID = localStorage.getItem("activeID");
+  
   const editItem = async (id, checked, text) => {
     const res = await instance.post("router?action=editItem", {
       activeID,
@@ -26,7 +27,7 @@ function Item({ item, updateItems }) {
 
   const deleteItem = async (id) => {
     const res = await instance.post("router?action=deleteItem", {
-      activeID,     
+      activeID,
       id,
     });
 
@@ -37,7 +38,7 @@ function Item({ item, updateItems }) {
     }
   };
   const keyPressHandler = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       editItem(item.id, item.checked, textField.value);
     }
   };
@@ -47,13 +48,36 @@ function Item({ item, updateItems }) {
       <Form.Check
         type="checkbox"
         checked={item.checked}
-        onChange={()=>editItem(item.id, !item.checked, item.text)}
+        onChange={() => editItem(item.id, !item.checked, item.text)}
       />
-      {!isEdit ? item.text : <Form.Control type="text" value={item.text} {...textField} onKeyPress={keyPressHandler} />}
-      <Button variant="outline-warning" onClick={() => {setIsEdit(prev=>!prev)}}>
+      {!isEdit ? (
+        <p
+          className={
+            item.checked ? `${styles.text} ${styles.checked}` : styles.text
+          }
+        >
+          {item.text}
+        </p>
+      ) : (
+        <Form.Control
+          type="text"
+          value={item.text}
+          {...textField}
+          onKeyPress={keyPressHandler}
+        />
+      )}
+      <Button
+        variant="outline-warning"
+        onClick={() => {
+          setIsEdit((prev) => !prev);
+        }}
+      >
         Edit
       </Button>
-      <Button variant="outline-success" onClick={()=>editItem(item.id, item.checked, textField.value)}>
+      <Button
+        variant="outline-success"
+        onClick={() => editItem(item.id, item.checked, textField.value)}
+      >
         Save
       </Button>
       <Button variant="outline-danger" onClick={() => deleteItem(item.id)}>
