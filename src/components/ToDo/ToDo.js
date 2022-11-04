@@ -6,6 +6,7 @@ function ToDo() {
   return (
     <section>
       <div className="container">
+        <h1 className={styles.title}>Додату нову задачу:</h1>
         <div className={styles.todoWrap}>
           <AddItem />
           <Items />

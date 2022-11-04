@@ -4,6 +4,7 @@ import Auth from "./components/Auth/Auth";
 import Layout from "./components/Layout/Layout";
 import "./App.scss";
 import ToDo from './components/ToDo/ToDo';
+// import Andr from './components/Andr/Andr';
 
 function App() {
   //const isLogin = checkLoginFunction();
@@ -16,6 +17,7 @@ function App() {
     return (
       <Layout toggleLogin={toggleLogin}>
         <Auth toggleLogin={toggleLogin} />
+        {/* <Andr /> */}
       </Layout>
     );
   }
