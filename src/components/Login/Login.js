@@ -1,44 +1,47 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import loginFunction from "../../common/loginFunction";
+import useFormField from "../../common/useFieldsFunction";
 import AuthFormInner from "../AuthFormInner/AuthFormInner";
-
-const useFormField = () => {
-  const [value, setValue] = useState("");
-  const onChange = useCallback((e) => setValue(e.target.value), []);
-  return { value, onChange };
-};
 
 function Login({ toggleLogin }) {
   const loginField = useFormField();
   const passField = useFormField();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const showMessage = (message) => {
+    setError(message);
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  };
   const login = async (e) => {
     e.preventDefault();
-    if (loginField.value==='' || passField.value==='') {
-      setError('Empty field');
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-      return;
-    }
-    const data = await loginFunction(loginField.value, passField.value);
+    try {
+      if (loginField.value === "" || passField.value === "") {
+        showMessage("Empty field");
+        return;
+      }
+      const data = await loginFunction(loginField.value, passField.value);
 
-    if (data.isLogin) {
-      toggleLogin(true);
-    } else {
-      setError(data.message);
-      setTimeout(() => {
-        setError('');
-      }, 3000);
+      if (data.isLogin) {
+        toggleLogin(true);
+      } else {
+        showMessage(data.message);
+      }
+    } catch (err) {
+      showMessage("Помилка сервера");
     }
   };
   return (
     <section className="login">
       <div className="container">
         <Form>
-          <AuthFormInner loginField={loginField} passField={passField} error={error} />
+          <AuthFormInner
+            loginField={loginField}
+            passField={passField}
+            error={error}
+          />
           <Button variant="primary" type="submit" onClick={login}>
             Login
           </Button>

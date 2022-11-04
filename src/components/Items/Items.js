@@ -1,20 +1,8 @@
-import { useEffect, useState } from "react";
-import instance from "../../api/request";
 import Item from "../Item/Item";
 import styles from './Items.module.scss';
 
-function Items() {
-  const [items, setItems] = useState([]);
-  useEffect(() => {
-    async function getItems() {
-      const res = await instance.post("router?action=getItems", {
-        activeID: localStorage.getItem("activeID"),
-      });
-      setItems(res.data.items);
-    }
+function Items({items, updateItems}) {
 
-    getItems();
-  }, []);
 
   return (
     <div>
@@ -23,8 +11,7 @@ function Items() {
       ) : (
         <ul className={styles.items}>
           {items.map((item, i) => (
-            // <li key={`${item.text}-${i}`}>{item.text}</li>
-            <Item key={`${item.text}-${i}`} item={item} />
+            <Item key={`${item.text}-${i}`} item={item} updateItems={updateItems} />
           ))}
         </ul>
       )}

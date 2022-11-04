@@ -12,7 +12,7 @@ function App() {
   const toggleLogin = (data) => {
     setIsLogin(data)
   }
-  console.log(isLogin)
+  
   if (!isLogin) {
     return (
       <Layout toggleLogin={toggleLogin}>
