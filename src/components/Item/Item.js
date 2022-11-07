@@ -9,7 +9,7 @@ function Item({ item, updateItems }) {
   const [isEdit, setIsEdit] = useState(false);
   const textField = useFormField(item.text);
   const activeID = localStorage.getItem("activeID");
-  
+
   const editItem = async (id, checked, text) => {
     const res = await instance.post("router?action=editItem", {
       activeID,
@@ -26,7 +26,7 @@ function Item({ item, updateItems }) {
   };
 
   const deleteItem = async (id) => {
-    const res = await instance.post("router?action=deleteItem", {
+    const res = await instance.post("router?action=deleteItem1", {
       activeID,
       id,
     });
