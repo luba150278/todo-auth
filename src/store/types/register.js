@@ -1,0 +1,5 @@
+export const regTypes = {
+  REG_SUCCESS: 'REG_SUCCESS',
+  REG_DATA_ERROR: 'REG_DATA_ERROR',
+  REG_SERVER_ERROR: 'REG_ERROR'
+}
