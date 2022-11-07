@@ -6,7 +6,7 @@ import useFormField from "../../common/useFieldsFunction";
 
 import { store } from "../../store";
 import { fetchLogin } from "../../store/actions/login";
-import { loginTypes } from "../../store/types/login";
+import { authTypes } from "../../store/types/auth";
 
 import AuthFormInner from "../AuthFormInner/AuthFormInner";
 
@@ -24,7 +24,7 @@ function Login({ toggleLogin }) {
   const login = async (e) => {
     e.preventDefault();
     const res = await store.dispatch(fetchLogin(loginField.value, passField.value))
-    if (res.type === loginTypes.LOGIN_SUCCESS) {
+    if (res.type === authTypes.AUTH_SUCCESS) {
       toggleLogin(true);
     } else {
       showMessage(res.payload)

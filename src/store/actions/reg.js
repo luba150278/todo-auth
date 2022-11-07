@@ -5,9 +5,8 @@ import {
   ERROR_AUTH_EMPTY_MESSAGE,
 } from "../../common/constants/constants";
 import { authTypes } from "../types/auth";
-import { saveLoginDataFunction } from "../../common/saveLoginDataFunction";
 
-export const fetchLogin = (login, pass) => async (dispatch) => {
+export const fetchReg = (login, pass) => async (dispatch) => {
   try {
     if (login === "" && pass === "") {
       return dispatch({
@@ -16,12 +15,11 @@ export const fetchLogin = (login, pass) => async (dispatch) => {
       });
     }
 
-    const res = await instance.post("router?action=login", {
+    const res = await instance.post("router?action=register", {
       login,
       pass,
     });
     if (res.data.ok) {
-      saveLoginDataFunction(res.data.token, res.data.activeID)
       return dispatch({
         type: authTypes.AUTH_SUCCESS
       });
