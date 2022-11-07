@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import Header from "../Header/Header";
 import styles from './Layout.module.scss'
 
@@ -16,6 +17,7 @@ function Layout(props) {
           </p>
         </div>
       </footer>
+      <ToastContainer />
     </div>
   );
 }

@@ -1,24 +1,20 @@
 import { Button } from "react-bootstrap";
-import instance from "../../api/request";
-import { clearSrorage } from "../../common/clearLocalStorageFunction";
-import styles from './Header.module.scss'
+import getErrorNotify from "../../common/getErrorMessageFunction";
+import { store } from "../../store";
+import { fetchLogout } from "../../store/actions/logout.action";
+import { logoutTypes } from "../../store/types/logout.types";
+import styles from "./Header.module.scss";
 
-function Header({toggleLogin}) {
-  // Приймаємо глобальні значення lang  за допомогою хука useContext
+function Header({ toggleLogin }) {
   const logoutFunction = async () => {
-    try {
-      const res = await instance.post("router?action=logout");
-      if (res.data.ok) {
-        clearSrorage();
-        toggleLogin(false)
-      } else {
-        
+    
+      const res = await store.dispatch(fetchLogout());
+      if (res.type === logoutTypes.LOGOUT_SUCCESS) {
+        toggleLogin(false);
+        return;
       }
-    } catch (err) {
-      
-    }
-
-  }
+      getErrorNotify(res.payload);
+  };
   return (
     <header>
       <div className="container">

@@ -1,11 +1,9 @@
 import Form from "react-bootstrap/Form";
-import styles from './AuthFormInner.module.scss';
 
-function AuthFormInner({loginField, passField, error}) {
+function AuthFormInner({loginField, passField}) {
 
   return (
     <>
-      {error !== '' ? <p className={styles.error}>{error}</p> : null}
       <Form.Group className="mb-3">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="text" placeholder="Enter login" {...loginField} />
