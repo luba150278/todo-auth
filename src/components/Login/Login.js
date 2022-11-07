@@ -16,21 +16,20 @@ function Login({ toggleLogin }) {
 
   const login = async (e) => {
     e.preventDefault();
-    const res = await store.dispatch(fetchLogin(loginField.value, passField.value))
+    const res = await store.dispatch(
+      fetchLogin(loginField.value, passField.value)
+    );
     if (res.type === authTypes.AUTH_SUCCESS) {
       toggleLogin(true);
     } else {
-      getErrorNotify(res.payload)
+      getErrorNotify(res.payload);
     }
   };
   return (
     <section className="login">
       <div className="container">
         <Form>
-          <AuthFormInner
-            loginField={loginField}
-            passField={passField}
-          />
+          <AuthFormInner loginField={loginField} passField={passField} />
           <Button variant="primary" type="submit" onClick={login}>
             Login
           </Button>
