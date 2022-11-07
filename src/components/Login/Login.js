@@ -1,8 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import getErrorNotify from "../../common/getErrorMessageFunction";
+import getErrorNotify from "../../common/functions/getErrorMessageFunction";
 
-import useFormField from "../../common/useFieldsFunction";
+import useFormField from "../../common/functions/useFieldsFunction";
 
 import { store } from "../../store";
 import { fetchLogin } from "../../store/actions/login.action";

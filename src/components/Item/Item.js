@@ -1,42 +1,45 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import instance from "../../api/request";
-import useFormField from "../../common/useFieldsFunction";
+import { ERROR_ADD_ITEM_DATA } from "../../common/constants/constants";
+import getErrorNotify from "../../common/functions/getErrorMessageFunction";
+import useFormField from "../../common/functions/useFieldsFunction";
+import { store } from "../../store";
+import { fetchDeleteItem } from "../../store/actions/itemDelete.action";
+import { fetchEditItem } from "../../store/actions/itemEdit.action";
+import { itemTypes } from "../../store/types/item.types";
 import styles from "./Item.module.scss";
 
 function Item({ item, updateItems }) {
+  
   const [isEdit, setIsEdit] = useState(false);
   const textField = useFormField(item.text);
-  const activeID = localStorage.getItem("activeID");
 
   const editItem = async (id, checked, text) => {
-    const res = await instance.post("router?action=editItem", {
-      activeID,
-      text,
-      id,
-      checked,
-    });
+    const res = await store.dispatch(fetchEditItem(text, id, checked));
 
-    if (res.data.ok) {
+    if (res.type === itemTypes.ITEM_CHANGE) {
+      if (!res.payload) {
+        getErrorNotify(ERROR_ADD_ITEM_DATA);
+        return;
+      }
       updateItems(true);
-    } else {
-      console.log("edit error");
+      return;
     }
+
+    getErrorNotify(res.payload);
   };
 
   const deleteItem = async (id) => {
-    const res = await instance.post("router?action=deleteItem1", {
-      activeID,
-      id,
-    });
+    const res = await store.dispatch(fetchDeleteItem(id));
 
-    if (res.data.ok) {
+    if (res.type === itemTypes.ITEM_DELETE) {
       updateItems(true);
-    } else {
-      console.log("delete error");
+      return;
     }
+    getErrorNotify(res.payload);
   };
+
   const keyPressHandler = (e) => {
     if (e.key === "Enter") {
       editItem(item.id, item.checked, textField.value);

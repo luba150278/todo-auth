@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import getErrorNotify from "../../common/getErrorMessageFunction";
+import getErrorNotify from "../../common/functions/getErrorMessageFunction";
 import { store } from "../../store";
 import { fetchToDo } from "../../store/actions/todo.action";
 import { todoTypes } from "../../store/types/todo.types";
@@ -15,6 +15,7 @@ function ToDo() {
 
   const updateItems = (isUpdate) => {
     if (isUpdate) {
+      setIsLoading(true);
       setIsItemsUpdate(isItemsUpdate + 1);
     }
   };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { checkLoginFunction } from "./common/checkLoginFunction";
+import { checkLoginFunction } from "./common/functions/checkLoginFunction";
 import Auth from "./components/Auth/Auth";
 import Layout from "./components/Layout/Layout";
 import "./App.scss";
@@ -11,7 +11,7 @@ function App() {
   const toggleLogin = (data) => {
     setIsLogin(data)
   }
-  
+
   if (!isLogin) {
     return (
       <Layout toggleLogin={toggleLogin}>

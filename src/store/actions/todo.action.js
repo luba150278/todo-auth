@@ -8,7 +8,7 @@ export const fetchToDo = () => async (dispatch) => {
     dispatch({
       type: todoTypes.TODO_WAIT_DATA
     });
-    const activeID = localStorage.getItem('activeID');
+    const activeID = localStorage.getItem('activeID') || '';
     const res = await instance.post("router?action=getItems", {
       activeID,
     });

@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import getErrorNotify from "../../common/getErrorMessageFunction";
-import useFormField from "../../common/useFieldsFunction";
+import getErrorNotify from "../../common/functions/getErrorMessageFunction";
+import useFormField from "../../common/functions/useFieldsFunction";
 
 import { store } from "../../store";
 import { fetchReg } from "../../store/actions/reg.action";

@@ -1,5 +1,5 @@
 import instance from "../../api/request";
-import { clearSrorage } from "../../common/clearLocalStorageFunction";
+import { clearSrorage } from "../../common/functions/clearLocalStorageFunction";
 import { ERROR_LOGOUT_DATA_MESSAGE, ERROR_LOGOUT_SERVER_MESSAGE } from "../../common/constants/constants";
 import { logoutTypes } from "../types/logout.types";
 
@@ -7,7 +7,7 @@ import { logoutTypes } from "../types/logout.types";
 export const fetchLogout = () => async (dispatch) => {
   try {
     const res = await instance.post("router?action=logout");
-    if (res.data.ok) { 
+    if (res.data.ok) {
       clearSrorage();
       return dispatch({
         type: logoutTypes.LOGOUT_SUCCESS

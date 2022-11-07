@@ -5,7 +5,7 @@ import {
   ERROR_AUTH_EMPTY_MESSAGE,
 } from "../../common/constants/constants";
 import { authTypes } from "../types/auth.types";
-import { saveLoginDataFunction } from "../../common/saveLoginDataFunction";
+import { saveLoginDataFunction } from "../../common/functions/saveLoginDataFunction";
 
 export const fetchLogin = (login, pass) => async (dispatch) => {
   try {

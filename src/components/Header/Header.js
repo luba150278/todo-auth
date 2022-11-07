@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import getErrorNotify from "../../common/getErrorMessageFunction";
+import getErrorNotify from "../../common/functions/getErrorMessageFunction";
 import { store } from "../../store";
 import { fetchLogout } from "../../store/actions/logout.action";
 import { logoutTypes } from "../../store/types/logout.types";
