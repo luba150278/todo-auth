@@ -20,6 +20,7 @@ export const fetchReg = (login, pass) => async (dispatch) => {
       pass,
     });
     if (res.data.ok) {
+      
       return dispatch({
         type: authTypes.AUTH_SUCCESS
       });
