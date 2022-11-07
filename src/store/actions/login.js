@@ -4,6 +4,7 @@ import {
   ERROR_LOGIN_DATA_MESSAGE,
 } from "../../common/constants/constants";
 import { loginTypes } from "../types/login";
+import { saveLoginDataFunction } from "../../common/saveLoginDataFunction";
 
 export const fetchLogin = (login, pass) => async (dispatch) => {
   try {
@@ -14,14 +15,17 @@ export const fetchLogin = (login, pass) => async (dispatch) => {
       });
     }
 
-    //dispatch({ type: loginTypes.LOGIN });
-    const response = await instance.post("router?action=login", {
+    const res = await instance.post("router?action=login", {
       login,
       pass,
     });
+    if (res.data.ok) {
+      saveLoginDataFunction(res.data.token, res.data.activeID)
+      return;
+    }
     return dispatch({
-      type: loginTypes.LOGIN_SUCCESS,
-      payload: { token: response.data.token, activeID: response.data.activeID },
+      type: loginTypes.LOGIN_DATA_ERROR,
+      payload: ERROR_LOGIN_DATA_MESSAGE,
     });
   } catch (e) {
     return dispatch({
