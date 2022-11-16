@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { Component } from "react";
 
 import getErrorNotify from "../../common/functions/getErrorMessageFunction";
 import { store } from "../../store";
@@ -8,49 +8,57 @@ import AddItem from "../AddItem/AddItem";
 import Items from "../Items/Items";
 import styles from "./ToDo.module.scss";
 
-function ToDo() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [items, setItems] = useState([]);
-  const [isItemsUpdate, setIsItemsUpdate] = useState(0);
+class ToDo extends Component {
+  state = {
+    isLoading: true,
+    items: [],
+  }
 
-  const updateItems = (isUpdate) => {
+
+  updateItems = (isUpdate) => {
     if (isUpdate) {
-      setIsLoading(true);
-      setIsItemsUpdate(isItemsUpdate + 1);
+      this.setState({ isLoading: true});
     }
   };
-
-  async function getItems() {
+  getItems = async()=> {
     const res = await store.dispatch(fetchToDo());
-    setIsLoading(res.payload.loading);
+    this.setState({ isLoading: res.payload.loading });
     if (res.type === todoTypes.TODO_SUCCESS) {
-      setItems(res.payload);
+      this.setState({ items: res.payload });
       return;
     }
     getErrorNotify(res.payload.error);
   }
+  componentDidMount() {
+    this.getItems();
+  }
 
-  useEffect(() => {
-    getItems();
-  }, [isItemsUpdate]);
+  componentDidUpdate(prevState) {
+    if (this.state.items !== prevState.items) {
+      this.getItems();
+    }
+  }
 
-  return (
-    <section>
-      <div className="container">
-        {isLoading ? (
-          "loading"
-        ) : (
-          <>
-            <h1 className={styles.title}>Додату нову задачу:</h1>
-            <div className={styles.todoWrap}>
-              <AddItem updateItems={updateItems} />
-              <Items items={items} updateItems={updateItems} />
-            </div>
-          </>
-        )}
-      </div>
-    </section>
-  );
+  render() {
+    const { isLoading, items } = this.state;
+    return (
+      <section>
+        <div className="container">
+          {isLoading ? (
+            "loading"
+          ) : (
+            <>
+              <h1 className={styles.title}>Додату нову задачу:</h1>
+              <div className={styles.todoWrap}>
+                <AddItem updateItems={this.updateItems} />
+                <Items items={items} updateItems={this.updateItems} />
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+    );
+  }
 }
 
 export default ToDo;

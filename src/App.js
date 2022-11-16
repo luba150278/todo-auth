@@ -1,26 +1,33 @@
-import { useState } from 'react';
+import { Component } from "react";
 import { checkLoginFunction } from "./common/functions/checkLoginFunction";
 import Auth from "./components/Auth/Auth";
 import Layout from "./components/Layout/Layout";
 import "./App.scss";
-import ToDo from './components/ToDo/ToDo';
-// import Andr from './components/Andr/Andr';
+import ToDo from "./components/ToDo/ToDo";
 
-function App() {
-  const [isLogin, setIsLogin] = useState(checkLoginFunction())
-  const toggleLogin = (data) => {
-    setIsLogin(data)
-  }
+class App extends Component {
+  state = {
+    isLogin: checkLoginFunction(),
+  };
+  
+  toggleLogin = (data) => {
+    this.setState({ isLogin: data });
+  };
 
-  if (!isLogin) {
+  render() {
+    if (!this.state.isLogin) {
+      return (
+        <Layout toggleLogin={this.toggleLogin}>
+          <Auth toggleLogin={this.toggleLogin} />
+        </Layout>
+      );
+    }
     return (
-      <Layout toggleLogin={toggleLogin}>
-        <Auth toggleLogin={toggleLogin} />
-        {/* <Andr /> */}
+      <Layout toggleLogin={this.toggleLogin}>
+        <ToDo />
       </Layout>
     );
   }
-  return <Layout toggleLogin={toggleLogin}><ToDo /></Layout>;
 }
 
 export default App;
