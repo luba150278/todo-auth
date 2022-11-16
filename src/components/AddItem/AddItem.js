@@ -1,34 +1,39 @@
+import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import instance from "../../api/request";
 import useFormField from "../../common/useFieldsFunction";
+import { store } from "../../store";
+import { fetchAddItem } from "../../store/dispatches/itemAdd.dispatch";
 import styles from "./AddItem.module.scss";
 
 function AddItem({ updateItems }) {
+  const [mess, stateMess] = useState("");
   const taskField = useFormField();
   const addItemFunction = async (e) => {
     e.preventDefault();
-    try {
-      const res = await instance.post("router?action=createItem", {
-        activeID: localStorage.getItem("activeID"),
-        text: taskField.value,
-      });
-      if (res.data.id !== "") {
-        updateItems(true);
-      } else {
-        console.log("empty id");
-      }
-    } catch (err) {
-      console.log("server error");
+
+    const res = await store.dispatch(fetchAddItem(taskField.value));
+    if (res.type === "ITEM_ADD") {
+      updateItems(res.payload);
+      return;
     }
+    stateMess(res.payload);
   };
   return (
-    <Form className={styles.inputNewTask}>
-      <Form.Control type="text" placeholder="Нова задача" {...taskField} />
-      <Button variant="outline-primary" onClick={addItemFunction} type="submit">
-        Додати задачу
-      </Button>
-    </Form>
+    <>
+      {mess !== "" ? <p>{mess}</p> : null}
+      <Form className={styles.inputNewTask}>
+        <Form.Control type="text" placeholder="Нова задача" {...taskField} />
+
+        <Button
+          variant="outline-primary"
+          onClick={addItemFunction}
+          type="submit"
+        >
+          Додати задачу
+        </Button>
+      </Form>
+    </>
   );
 }
 

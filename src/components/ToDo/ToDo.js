@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import instance from "../../api/request";
+import { store } from "../../store";
+import { fetchItem } from "../../store/dispatches/item.dispatch";
 import AddItem from "../AddItem/AddItem";
 import Items from "../Items/Items";
 import styles from "./ToDo.module.scss";
@@ -15,17 +16,12 @@ function ToDo() {
   };
 
   async function getItems() {
-    try {
-      const res = await instance.post("router?action=getItems", {
-        activeID: localStorage.getItem("activeID"),
-      });
-      if (res.data.items) {
-        setItems(res.data.items);
-        return;
-      }
-      console.log("No data");
-    } catch (err) {
-      console.log("Server error");
+
+    const data = await store.dispatch(fetchItem());
+
+    if (data.payload) {
+      setItems(data.payload);
+      return;
     }
   }
 

@@ -3,6 +3,8 @@ import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import instance from "../../api/request";
 import useFormField from "../../common/useFieldsFunction";
+import { store } from "../../store";
+import { fetchDeleteItem } from "../../store/dispatches/itemDelete.dispatch";
 import styles from "./Item.module.scss";
 
 function Item({ item, updateItems }) {
@@ -26,15 +28,12 @@ function Item({ item, updateItems }) {
   };
 
   const deleteItem = async (id) => {
-    const res = await instance.post("router?action=deleteItem1", {
-      activeID,
-      id,
-    });
+    const res = await store.dispatch(fetchDeleteItem(id))
 
-    if (res.data.ok) {
-      updateItems(true);
+    if (res.type === "ITEM_DELETE") {
+      updateItems(res.payload);
     } else {
-      console.log("delete error");
+      console.log(res.payload);
     }
   };
   const keyPressHandler = (e) => {

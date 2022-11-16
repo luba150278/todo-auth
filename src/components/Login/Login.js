@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import loginFunction from "../../common/loginFunction";
 import useFormField from "../../common/useFieldsFunction";
 import AuthFormInner from "../AuthFormInner/AuthFormInner";
+import { store } from "../../store"
+import { fetchLogin } from "../../store/dispatches/login.dispatch";
 
 function Login({ toggleLogin }) {
   const loginField = useFormField();
@@ -17,21 +18,16 @@ function Login({ toggleLogin }) {
   };
   const login = async (e) => {
     e.preventDefault();
-    try {
-      if (loginField.value === "" || passField.value === "") {
-        showMessage("Empty field");
-        return;
-      }
-      const data = await loginFunction(loginField.value, passField.value);
 
-      if (data.isLogin) {
-        toggleLogin(true);
-      } else {
-        showMessage(data.message);
-      }
-    } catch (err) {
-      showMessage("Помилка сервера");
+
+    const data = await store.dispatch(fetchLogin(loginField.value, passField.value));
+
+    if (data.type === "AUTH_SUCCESS") {
+      toggleLogin(true);
+    } else {
+      showMessage(data.payload);
     }
+
   };
   return (
     <section className="login">
