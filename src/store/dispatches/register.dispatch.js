@@ -9,7 +9,7 @@ export const fetchReg = (login, pass) => async (dispatch) => {
       return dispatch({ type: authTypes.AUTH_DATA_ERROR, payload: "Пустий пароль або логін" })
     }
 
-    const res = await instance.post("router?action=register1", { login, pass });
+    const res = await instance.post("router?action=register", { login, pass });
     if (res.data.ok && !res.data.alreadyExist) {
       return dispatch({
         type: authTypes.AUTH_SUCCESS
