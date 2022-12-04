@@ -2,7 +2,6 @@ import { Component } from "react";
 import Item from "../Item/Item";
 import styles from "./Items.module.scss";
 
-// ({ items, updateItems })
 class Items extends Component {
   render() {
     return (
